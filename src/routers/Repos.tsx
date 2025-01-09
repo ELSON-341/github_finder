@@ -15,7 +15,7 @@ const Repos = () => {
 
     const [repos, setRepos] = useState<RepoProps[] | [] | null>(null)
     const [isLoading, setIsLoader] = useState(false)
-
+     
     useEffect(() => {
         setIsLoader(true)
 
@@ -26,12 +26,17 @@ const Repos = () => {
 
             setIsLoader(false)
 
-            setRepos(data);
-            
+            let orderedRepos = data.sort((a: RepoProps, b: RepoProps) => b.stargazers_count - a.stargazers_count)
+
+            orderedRepos = orderedRepos.slice(0, 5)
+
+            setRepos(orderedRepos);
+
         }
         
         if (username) {
             loadRepos(username)
+            
         }
     }, [])
 
@@ -39,18 +44,19 @@ const Repos = () => {
 
     return (
         <div className={classes.repos}>
-            <BackBtn/>
-            <h2>Explore os repositórios do usuário: {username}</h2>
-            {repos && repos.length === 0 && <p>Não há repositórios.</p>}
-            {repos && repos.length > 0 && (
-                <div className={classes.repos_container}>
-                    {repos.map((repo: RepoProps) => (
-                        <Repo key={repo.name} {...repo}/>
-                    ))}
-                </div>
-            )}
+          <BackBtn />
+          <h2>Explore os repositórios do usuário: {username}</h2>
+          {repos && repos.length === 0 && <p>Não há repositórios.</p>}
+          {repos && repos.length > 0 && (
+            <div className={classes.repos_container}>
+              {repos.map((repo: RepoProps) => (
+                <Repo key={repo.name} {...repo} />
+              ))}
+            </div>
+          )}
         </div>
-    )
-}
+      );
+    };
+
 
 export default Repos

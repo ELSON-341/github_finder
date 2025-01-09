@@ -6,19 +6,19 @@ import { RiGitRepositoryLine } from "react-icons/ri"
 
 import classes from "./Repo.module.css"
 
-const Repo = ({ name, language, html_url, forks_count, stargazer_count }: RepoProps) => {
+const Repo = ({ name, language, html_url, forks_count, stargazers_count}: RepoProps) => {
 
     return (
         <div className={classes.repo}>
             <h3>{name}</h3>
-            <p>
+            <p className={classes.language}>
                 <BsCodeSlash />
-                {language}
+                <span>{language}</span>
             </p>
             <div className={classes.stats}>
                 <div>
                     <AiOutlineStar/>
-                    <span>{stargazer_count}</span>
+                    <span>{stargazers_count}</span>
                 </div>
                 <div>
                     <AiOutlineFork/>
